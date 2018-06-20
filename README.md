@@ -1,6 +1,6 @@
 # AWS Challenge
 
-Build a simple servce that integrates to [this simple API](https://aws-challenge.quintoandar.com.br/apidocs/). We expect you to create a simple form that submits your name and email to the API. There are two paths you can take to acheive this:
+Build a simple service that integrates to [this simple API](https://aws-challenge.quintoandar.com.br/apidocs/). We expect you to create a simple form that submits the required data to the API. There are two paths you can take to acheive this:
 
 
 ## Build and Deploy
