@@ -19,6 +19,8 @@ Construa uma aplicação simples em qualquer linguagem, capaz de enviar o _paylo
 
 Para isso você precisará criar um **Dockerfile**. O Dockerfile é consumido servidor de integração que faz o _deploy_ no AWS Elastic Container Service.
 
+Nós temos alguns arquivos de exemplo em python para te ajudar (Dockerfile, app.py, server.ini), mas você pode resolver em qualquer linguagem!
+
 1.  Crie uma aplicação (em qualquer linguagem) que envie o _payload_ necessário para [nossa API](https://aws-challenge.quintoandar.com.br/apidocs/)
 2.  Imprima a resposta `msg` na porta 80
 3.  Edite o Dockerfile para rodar sua aplicação
