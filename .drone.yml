@@ -16,7 +16,7 @@ pipeline:
     container_name: app
     docker_image: 518431211874.dkr.ecr.us-east-1.amazonaws.com/aws-summit-2018
     tag: ${DRONE_COMMIT}
-    service: solution-A # solution-B
+    service: solution-B # solution-A
     cluster: aws-summit-2018
     port_mappings: [ 80 80 ]
     task_cpu: 256
