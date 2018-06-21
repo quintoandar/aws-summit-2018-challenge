@@ -16,6 +16,6 @@ const server = http.createServer(function(req,resp){
     })
 })
 
-server.listen(80, 'localhost', function(){
+server.listen(80, '0.0.0.0', function(){
     console.log("Works on 80")
 })
