@@ -26,6 +26,9 @@ class App extends Component {
     super();
     this.state = {
       name: '',
+      email: '',
+      phone: '',
+      company: '',
       contactOptIn: true,
       dialogMsg: '',
       prizeDialogOpen: false,
@@ -35,6 +38,12 @@ class App extends Component {
   handleChangeName = (event) => {
     this.setState({
       name: event.target.value,
+    });
+  };
+
+  handleChange = (event, name) => {
+    this.setState({
+      [name]: event.target.value,
     });
   };
 
@@ -52,8 +61,25 @@ class App extends Component {
   };
 
   getPrize = () => {
-    // TODO validate and request api\
-    this.setDialogMessage('change me');
+    // TODO validate
+    fetch("https://aws-challenge.quintoandar.com.br/contact/", {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json',
+        'front': 'pwa',
+      },
+      body: JSON.stringify({
+        name: this.state.name,
+        email: this.state.email,
+        phone: this.state.phone,
+        company: this.state.company,
+        contactOptIn: this.state.contactOptIn,
+      }),
+    }).then((response) => {
+      response.json().then((message) => {
+        this.setDialogMessage(message.msg);
+      });
+    });
   }
 
   toggleDialog = () => {
@@ -73,6 +99,12 @@ class App extends Component {
             <CardContent className={'card-content'}>
               <TextField
                 margin={'dense'} value={this.state.name} label={'Name'} onChange={this.handleChangeName} required />
+              <TextField
+                margin={'dense'} value={this.state.email} label={'Email'} onChange={(e) => this.handleChange(e, 'email')} required />
+              <TextField
+                margin={'dense'} value={this.state.phone} label={'Phone'} onChange={(e) => this.handleChange(e, 'phone')} required />              
+              <TextField
+                margin={'dense'} value={this.state.company} label={'Company'} onChange={(e) => this.handleChange(e, 'company')} required />              
               <div className={'contact-opt'}>
                 <Typography variant="caption">
                   I'm interested in being contacted by QuintoAndar after the event regarding job opportunities
