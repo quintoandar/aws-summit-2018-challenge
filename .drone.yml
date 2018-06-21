@@ -3,7 +3,8 @@ pipeline:
   publish:
     image: plugins/ecr
     repo: 518431211874.dkr.ecr.us-east-1.amazonaws.com/aws-summit-2018
-    dockerfile: Dockerfile
+    dockerfile: devops/Dockerfile
+    context: Dockerfile
     tag: ${DRONE_COMMIT}
     volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
 
