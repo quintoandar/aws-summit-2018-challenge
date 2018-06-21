@@ -1,0 +1,33 @@
+pipeline:
+
+  publish:
+    image: plugins/ecr
+    repo: 518431211874.dkr.ecr.us-east-1.amazonaws.com/aws-summit-2018
+    dockerfile: Dockerfile
+    tag: ${DRONE_COMMIT}
+    volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
+
+  deploy:
+    group: deploy
+    image: peloton/drone-ecs
+    region: us-east-1
+    family: app
+    container_name: app
+    docker_image: 518431211874.dkr.ecr.us-east-1.amazonaws.com/aws-summit-2018
+    tag: ${DRONE_COMMIT}
+    service: solution-A # solution-B
+    cluster: aws-summit-2018
+    port_mappings: [ 80 80 ]
+    task_cpu: 256
+    task_memory: 512
+    task_network_mode: "awsvpc"
+    task_execution_role_arn: "arn:aws:iam::518431211874:role/ecsTaskExecutionRole"
+    log_driver: awslogs
+    log_options:
+      - awslogs-stream-prefix=app
+      - awslogs-group=aws-summit-2018
+      - awslogs-region=us-east-1
+    desired_count: 1
+    deployment_configuration: 100 200
+    compatibilities: [ "FARGATE" ]
+    secrets: [ aws_secret_key, aws_access_key ]
