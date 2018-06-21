@@ -16,6 +16,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 
 import Typography from '@material-ui/core/Typography';
 
+import axios from 'axios';
+
 import Logo from './logo.png';
 
 import './App.css';
@@ -26,6 +28,9 @@ class App extends Component {
     super();
     this.state = {
       name: '',
+      email: '',
+      phone: '',
+      company: '',
       contactOptIn: true,
       dialogMsg: '',
       prizeDialogOpen: false,
@@ -35,6 +40,24 @@ class App extends Component {
   handleChangeName = (event) => {
     this.setState({
       name: event.target.value,
+    });
+  };
+
+  handleChangeCompany = (event) => {
+    this.setState({
+      company: event.target.value,
+    });
+  };
+
+  handleChangeEmail = (event) => {
+    this.setState({
+      email: event.target.value,
+    });
+  };
+
+  handleChangePhone = (event) => {
+    this.setState({
+      phone: event.target.value,
     });
   };
 
@@ -53,7 +76,34 @@ class App extends Component {
 
   getPrize = () => {
     // TODO validate and request api\
-    this.setDialogMessage('change me');
+    // headre front:pwa
+
+    const options = {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'front': 'pwa' },
+      data: this.state,
+      url: 'http://aws-challenge.quintoandar.com.br/contact/'
+    };
+
+    axios(options).then((response) => {
+      this.setDialogMessage(response.data.msg);
+    });
+
+    // fetch('http://aws-challenge.quintoandar.com.br/contact/', {
+    //   method: "POST",
+    //   body: Object.assign({}, this.state),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "front": "pwa"
+    //   }
+    // }).then(function(response) {
+    //   console.log(response.body);
+    // }, function(error) {
+    //   alert(error);
+    // })
+
+
+    // this.setDialogMessage('change me');
   }
 
   toggleDialog = () => {
@@ -71,8 +121,14 @@ class App extends Component {
               subheader={'Submit your info and win a prize'}
             />
             <CardContent className={'card-content'}>
-              <TextField
+            <TextField
                 margin={'dense'} value={this.state.name} label={'Name'} onChange={this.handleChangeName} required />
+            <TextField
+            margin={'dense'} value={this.state.email} label={'Email'} onChange={this.handleChangeEmail} required />
+            <TextField
+            margin={'dense'} value={this.state.phone} label={'Phone'} onChange={this.handleChangePhone} required />
+            <TextField
+            margin={'dense'} value={this.state.company} label={'Company'} onChange={this.handleChangeCompany} required />
               <div className={'contact-opt'}>
                 <Typography variant="caption">
                   I'm interested in being contacted by QuintoAndar after the event regarding job opportunities
