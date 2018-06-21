@@ -20,12 +20,17 @@ import Logo from './logo.png';
 
 import './App.css';
 
+import 'whatwg-fetch';
+
 class App extends Component {
 
   constructor() {
     super();
     this.state = {
       name: '',
+      email: '',
+      phone: '',
+      company: '',
       contactOptIn: true,
       dialogMsg: '',
       prizeDialogOpen: false,
@@ -35,6 +40,21 @@ class App extends Component {
   handleChangeName = (event) => {
     this.setState({
       name: event.target.value,
+    });
+  };
+  handleChangeEmail = (event) => {
+    this.setState({
+      email: event.target.value,
+    });
+  };
+  handleChangePhone = (event) => {
+    this.setState({
+      phone: event.target.value,
+    });
+  };
+  handleChangeCompany = (event) => {
+    this.setState({
+      company: event.target.value,
     });
   };
 
@@ -53,7 +73,34 @@ class App extends Component {
 
   getPrize = () => {
     // TODO validate and request api\
-    this.setDialogMessage('change me');
+    const contactUrl = 'https://aws-challenge.quintoandar.com.br/contact/';
+    const { name, email, phone, company, contactOptIn } = this.state;
+    if(name === '' || email === '' || phone === '' || company === '') {
+      this.setDialogMessage('Please, fill all the fields.');
+    } else {
+      const formData = {
+        name: name,
+        email: email,
+        phone: phone,
+        company: company,
+        contactOptIn: contactOptIn
+      }
+      fetch(contactUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'front': 'pwa'
+        },
+        body: JSON.stringify(formData)
+      }).then(response => {
+        return response.json();
+      }).then(json => {
+        this.setDialogMessage(json.msg);
+      })
+      .catch(e => {
+        this.setDialogMessage('Request error');
+      });
+    }
   }
 
   toggleDialog = () => {
@@ -73,6 +120,12 @@ class App extends Component {
             <CardContent className={'card-content'}>
               <TextField
                 margin={'dense'} value={this.state.name} label={'Name'} onChange={this.handleChangeName} required />
+              <TextField
+                margin={'dense'} value={this.state.email} label={'Email'} onChange={this.handleChangeEmail} required />
+              <TextField
+                margin={'dense'} value={this.state.phone} label={'Phone'} onChange={this.handleChangePhone} required />
+              <TextField
+                margin={'dense'} value={this.state.company} label={'Company'} onChange={this.handleChangeCompany} required />
               <div className={'contact-opt'}>
                 <Typography variant="caption">
                   I'm interested in being contacted by QuintoAndar after the event regarding job opportunities
