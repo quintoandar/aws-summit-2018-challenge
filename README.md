@@ -29,6 +29,8 @@ Para isso você precisará criar um **Dockerfile**. O Dockerfile é consumido se
     $ git push -u origin meu-nome
     ```
 
+*Important:* most webservers need to be configured to run on host "0.0.0.0" within docker!
+
 5.  Acesse sua aplicação em uma das URLs e verifique a resposta!
 
     ```
