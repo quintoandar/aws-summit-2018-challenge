@@ -1,4 +1,5 @@
-# FROM ubuntu
-# RUN apt-get update && apt-get install python
-# CMD ./app
-EXPOSE 80
+FROM node:8
+RUN apt-get update
+ADD . .
+CMD npm install --save axios && node app.js
+EXPOSE 8000
