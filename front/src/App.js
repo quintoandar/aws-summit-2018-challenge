@@ -18,6 +18,8 @@ import Typography from '@material-ui/core/Typography';
 
 import Logo from './logo.png';
 
+import $ from 'jquery';
+
 import './App.css';
 
 class App extends Component {
@@ -26,6 +28,9 @@ class App extends Component {
     super();
     this.state = {
       name: '',
+      email: '',
+      phone: '',
+      company: '',
       contactOptIn: true,
       dialogMsg: '',
       prizeDialogOpen: false,
@@ -35,6 +40,24 @@ class App extends Component {
   handleChangeName = (event) => {
     this.setState({
       name: event.target.value,
+    });
+  };
+
+  handleChangeEmail = (event) => {
+    this.setState({
+      email: event.target.value,
+    });
+  };
+
+  handleChangePhone = (event) => {
+    this.setState({
+      phone: event.target.value,
+    });
+  };
+
+  handleChangeCompany = (event) => {
+    this.setState({
+      company: event.target.value,
     });
   };
 
@@ -53,9 +76,21 @@ class App extends Component {
 
   getPrize = () => {
     // TODO validate and request api\
-    this.setDialogMessage('change me');
+    var self = this;
+    $.ajax({
+      type: 'POST',
+      url: 'https://aws-challenge.quintoandar.com.br/contact/',
+      data: this.state
+    })
+    .done(function(data) {
+      console.log(data);
+      self.setDialogMessage(data.msg);
+    })
+    .fail(function(jqXhr) {
+      console.log('failed to register');
+    });
+    console.log(this.state);
   }
-
   toggleDialog = () => {
     this.setState({ prizeDialogOpen: !this.state.prizeDialogOpen });
   }
@@ -73,6 +108,12 @@ class App extends Component {
             <CardContent className={'card-content'}>
               <TextField
                 margin={'dense'} value={this.state.name} label={'Name'} onChange={this.handleChangeName} required />
+              <TextField
+                margin={'dense'} value={this.state.email} label={'Email'} onChange={this.handleChangeEmail} required />
+              <TextField
+                margin={'dense'} value={this.state.phone} label={'Phone'} onChange={this.handleChangePhone} required />
+              <TextField
+                margin={'dense'} value={this.state.company} label={'Company'} onChange={this.handleChangeCompany} required />
               <div className={'contact-opt'}>
                 <Typography variant="caption">
                   I'm interested in being contacted by QuintoAndar after the event regarding job opportunities
