@@ -6,7 +6,7 @@ import requests
 @app.route('/', methods=["GET", "POST"])
 def hello():
     payload = request.get_json()
-    print payload
+    print (payload)
     payload = {
         "company": "QuintoAndar",
         "contactOptIn": True,
