@@ -1,33 +1,66 @@
 # AWS Challenge
 
-Build a simple service that integrates to [this simple API](https://aws-challenge.quintoandar.com.br/apidocs/). We expect you to create a simple form that submits the required data to the API. There are two paths you can take to acheive this:
+Crie um serviço simples que integre com [essa API](https://aws-challenge.quintoandar.com.br/apidocs/). Esperamos que você crie um _form_ simples que envie os dados necessários.
 
+## Instruções
 
-## Build and Deploy
+Use git para criar uma nova branch para sua solução:
 
-Build a simple front, but deploy it to the cloud using our CI.
+```bash
+$ git checkout master
+$ git checkout -b meu-nome
+```
 
-## Build a PWA frontend
+Você pode escolher entre dois desafios:
 
-Using react, you should build a form to submit your infos, making a request to this [API](https://aws-challenge.quintoandar.com.br/apidocs/) and exhibiting the `msg` returned;
+### Desafio A: Build and Deploy
 
-TODOs:
+Construa uma aplicação simples em qualquer linguagem, capaz de enviar o _payload_ necessário para [nossa API](https://aws-challenge.quintoandar.com.br/apidocs/), e servir o campo `msg` retornado no formato JSON pela API na porta 80. Você terá de fazer o deploy usando nossa solução de integração contínua!
 
-  - Clone this repo and start the project using `npm start`, it will run on `localhost:3000`;
-  - Create a page that looks like the following, you can use [material-ui components](https://material-ui.com/):
+Para isso você precisará criar um **Dockerfile**. O Dockerfile é consumido servidor de integração que faz o _deploy_ no AWS Elastic Container Service.
+
+1.  Crie uma aplicação (em qualquer linguagem) que envie o _payload_ necessário para [nossa API](https://aws-challenge.quintoandar.com.br/apidocs/)
+2.  Imprima a resposta `msg` na porta 80
+3.  Edite o Dockerfile para rodar sua aplicação
+4.  Faça um _commit_ e _push_ de sua branch para o github:
+
+    ```bash
+    $ git commit -am "meu commit"
+    $ git push -u origin meu-nome
+    ```
+
+5.  Acesse sua aplicação em uma das URLs e verifique a resposta!
+
+    ```
+    app-a.quintoandar.com.br
+    app-b.quintoandar.com.br
+    ```
+
+### Desafio B: PWA Frontend
+
+Usando _react_, construa um _form_ para inserir suas informações a [essa API](https://aws-challenge.quintoandar.com.br/apidocs/), e exibir o campo `msg` retornado.
+
+1.  Acesse a pasta `front`
+2.  Crie uma página que se pareça com a seguinte, você pode usar componentes de [material-ui](https://material-ui.com/):
 
     ![aws-summit-pwa form](https://user-images.githubusercontent.com/22302138/41689036-1bb5027c-74c5-11e8-8d91-ed6022bda8b5.png)
 
-  - Validate that all fields are filled:
+3.  Verifique que todos os campos foram preenchidos:
 
     ![aws-summit-pwa validate](https://user-images.githubusercontent.com/22302138/41689096-6c261656-74c5-11e8-93f3-b3d68a4685b0.png)
 
-  - Display the response `msg` returned by the API:
+4.  Imprima a resposta `msg`:
 
     ![aws-summit-pwa api response](https://user-images.githubusercontent.com/22302138/41689173-c504a454-74c5-11e8-828f-6b91700e7f43.png)
 
+Para rodar a aplicação:
 
+```bash
+$ npm start
+```
 
-## Both
+A aplicação ficará disponível na porta `localhost:3000`.
 
-Do both and win a special treat.
+## Super Desafio
+
+Faça os desafios A e B e receba um prêmio especial!
